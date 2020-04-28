@@ -1,0 +1,122 @@
+<html>
+<body>
+  <h2 align="center">
+    2017 Election for National House of Representatives
+  </h2>
+  <text>
+    Using data put together by
+    <a href="https://data.world/steveriffe">Steve Riffe</a>
+    at
+    <a href="https://data.world/steveriffe/ahca-votes">data.world</a>
+    for the 2017 Election for the House of Representatives, I have built two
+    statistical models for predicting whether a district will elect a Democratic
+    or Republican candidate based on its ethno-racial demographics. Riffe's
+    demographic data was taken from
+    <a href="https://ballotpedia.org/Demographics_of_congressional_districts_as_of_2013">
+      the US Census Bureau's 2013 estimates
+    </a>.
+    The Census Bureau's estimates use the following designations for the
+    ethno-racial groups:
+
+<!-- Note to self: learn more about <style>
+     Inert fashion guru joke here. -->
+
+    <style>
+    div{
+      text-align:center
+    }
+    ul {
+      padding:0;
+      margin:0;
+      display: inline-block;
+      text-align:left;
+      /*width: 90px;*/
+    }
+    </style>
+
+    <br>
+    </br>
+
+    <div>
+      <ul>
+        <li>Hispanic</li>
+        <li>White</li>
+        <li>Black</li>
+        <li>Native American</li>
+        <li>Asian</li>
+        <li>Pacific Islander</li>
+        <li>Other</li>
+        <li>Multiple Races</li>
+      </ul>
+    </div>
+
+    <br>
+    </br>
+
+    Rather than simply use the raw data, I engineered new features from each
+    ethno-racial category and the total estimated population of each district so
+    that each category was represented as a percentage of population. Using the
+    same principle, I also created a voter turnout feature; however, due to
+    Riffe's lack of clarity in creating a data dictionary for this dataset, it
+    is not clear as  to whether this should interpreted as voter turnout or the
+    turnout for the victorious candidate. Given the differences in magnitude
+    between the high percentage values, i.e. the majority, Whites, and the
+    sizeable minorities, Blacks and Hispanics, and smaller minories such as
+    Asians and Pacific Islanders, I
+    followed best practices and
+    <a href="https://365datascience.com/standardization/">standardized</a>
+    the data with
+    <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">
+      StandardScaler
+    </a>
+    in a
+    <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html">
+    SciKitLearn pipeline
+    </a>
+    for each model.
+
+    <br>
+    </br>
+
+    Seeing that the question called for a classification model, I chose
+    SciKitLearn's LogisticRegression and XGBoost's XGBoostClassifier. Since the
+    former is a linear model and the latter is tree-based, I decided that this
+    would be a good opporotunity to outline some of the key differences between
+    the two model types. I have also used a train, val, test split with the
+    former and cross validation for the latter and will outline some of the key
+    differences between the two approaches below.
+
+    <br>
+    </br>
+
+    Each case was measured against a mode-baseline in which each distric was
+    predicted to elect a Republican representative. The accuracy score was
+    chosen as the error-metric by which each model was compared with the
+    baseline and against each other.
+
+    <br>
+    </br>
+
+    <div align="center">
+      The mode-baseline for 2017 netted an accuracy score of 54.73%
+    </div>
+
+    <br>
+    </br>
+
+    <h2 align="center">
+      Models
+    </h2>
+    <h3 align="center">
+      Logistic Regression
+    </h3>
+
+    <br>
+    </br>
+
+    Since the data was originally in alphabetical order by state name and
+    sequentially by district number, I shuffled the data and performed a
+    70/15/15 train, val, test split
+  </text>
+</body>
+</html>
