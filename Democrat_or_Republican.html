@@ -1,43 +1,60 @@
 <html>
+<style>
+body{
+  margin: 2.0em 20% 2.0em 17.5%;
+}
+</style>
 <body>
+  <h1 align="center">
+    Democrat or Republican?
+  </h1>
+  <h2 align="center">
+    <i>
+      What Demographics Can Tell Us About Voter's Choice of Party in House
+      Elections
+    </i>
+  </h2>
+
+  <br></br>
+
   <h2 align="center">
     2017 Election for National House of Representatives
   </h2>
   <text>
-    Using data put together by
-    <a href="https://data.world/steveriffe">Steve Riffe</a>
-    at
-    <a href="https://data.world/steveriffe/ahca-votes">data.world</a>
-    for the 2017 Election for the House of Representatives, I have built two
-    statistical models for predicting whether a district will elect a Democratic
-    or Republican candidate based on its ethno-racial demographics. Riffe's
-    demographic data was taken from
-    <a href="https://ballotpedia.org/Demographics_of_congressional_districts_as_of_2013">
-      the US Census Bureau's 2013 estimates
-    </a>.
-    The Census Bureau's estimates use the following designations for the
-    ethno-racial groups:
+    <p>
+      Using data put together by
+      <a href="https://data.world/steveriffe">Steve Riffe</a>
+      at
+      <a href="https://data.world/steveriffe/ahca-votes">data.world</a>
+      for the 2017 Election for the House of Representatives, I have built two
+      types statistical models for predicting whether a district will elect a
+      Democratic or Republican candidate based on its ethno-racial demographics.
+      Riffe's demographic data was taken from
+      <a href="https://ballotpedia.org/Demographics_of_congressional_districts_as_of_2013">
+        the US Census Bureau's 2013 estimates
+      </a>.
+    </p>
+
+    <p align="center">
+      The Census Bureau's estimates use the following designations for the
+      ethno-racial groups:
+    </p>
+
+    <br></br>
 
 <!-- Note to self: learn more about <style>
-     Inert fashion guru joke here. -->
+     Insert fashion guru joke here. -->
 
     <style>
-    div{
-      text-align:center
-    }
     ul {
       padding:0;
       margin:0;
       display: inline-block;
-      text-align:left;
-      /*width: 90px;*/
+      text-align: left;
     }
     </style>
 
-    <br>
-    </br>
-
-    <div>
+    <div align="center">
       <ul>
         <li>Hispanic</li>
         <li>White</li>
@@ -50,59 +67,45 @@
       </ul>
     </div>
 
-    <br>
-    </br>
 
-    Rather than simply use the raw data, I engineered new features from each
-    ethno-racial category and the total estimated population of each district so
-    that each category was represented as a percentage of population. Using the
-    same principle, I also created a voter turnout feature; however, due to
-    Riffe's lack of clarity in creating a data dictionary for this dataset, it
-    is not clear as  to whether this should interpreted as voter turnout or the
-    turnout for the victorious candidate. Given the differences in magnitude
-    between the high percentage values, i.e. the majority, Whites, and the
-    sizeable minorities, Blacks and Hispanics, and smaller minories such as
-    Asians and Pacific Islanders, I
-    followed best practices and
-    <a href="https://365datascience.com/standardization/">standardized</a>
-    the data with
-    <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">
-      StandardScaler
-    </a>
-    in a
-    <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html">
-    SciKitLearn pipeline
-    </a>
-    for each model.
+    <p>
+      After converting the data's raw values to reflect each demographic as a
+      percentage of the total estimated population of each district, I created
+      a voter turnout feature. I do need to note here that, due to Riffe's lack
+      of clarity in the dataset's data dictionary, it is not clear whether
+      this feature represents actual voter turnout or simply the total number of
+      votes the winning candidate received. The target category, the victourious
+      candidates' party affiliation was then coverted to binary values with
+      Democrat = 0 and Republican = 1. Before my reader asks where all the
+      independents went, suprisingly, there were none.
+    </p>
 
-    <br>
-    </br>
+    <br></br>
 
-    Seeing that the question called for a classification model, I chose
-    SciKitLearn's LogisticRegression and XGBoost's XGBoostClassifier. Since the
-    former is a linear model and the latter is tree-based, I decided that this
-    would be a good opporotunity to outline some of the key differences between
-    the two model types. I have also used a train, val, test split with the
-    former and cross validation for the latter and will outline some of the key
-    differences between the two approaches below.
+    <p>
+      Seeing that the question called for a classification model, I chose
+      SciKitLearn's LogisticRegression and XGBoost's XGBoostClassifier. Since
+      the former is a linear model and the latter is tree-based, I decided that
+      this would be a good opporotunity to outline some of the key differences
+      between the two model types. I have also used a train, val, test split
+      with the former and cross validation for the latter and will outline some
+      of the key differences between the two approaches below.
+    </p>
 
-    <br>
-    </br>
+    <br></br>
 
-    Each case was measured against a mode-baseline in which each distric was
-    predicted to elect a Republican representative. The accuracy score was
-    chosen as the error-metric by which each model was compared with the
-    baseline and against each other.
+    <p>
+      Each case was measured against a mode-baseline in which each district was
+      predicted to elect a Republican representative. The accuracy score was
+      chosen as the error-metric by which each model was compared with the
+      baseline and against each other.
+    </p>
 
-    <br>
-    </br>
-
-    <div align="center">
+    <p align="center">
       The mode-baseline for 2017 netted an accuracy score of 54.73%
-    </div>
+    </p>
 
-    <br>
-    </br>
+    <br></br>
 
     <h2 align="center">
       Models
@@ -111,12 +114,478 @@
       Logistic Regression
     </h3>
 
-    <br>
-    </br>
+    <br></br>
 
-    Since the data was originally in alphabetical order by state name and
-    sequentially by district number, I shuffled the data and performed a
-    70/15/15 train, val, test split
+    <p>
+      Since the data was originally in alphabetical order by state name and
+      sequentially by district number, I shuffled the data and performed a
+      70/15/15 train, val, test split. I then perfomed logistic regression, a
+      natural choice given the data's binary nature.
+      This was done in a
+      <a href="https://towardsdatascience.com/a-simple-example-of-pipeline-in-machine-learning-with-scikit-learn-e726ffbb6976">
+        SciKitLearn pipeline with StandardScaler
+      </a>
+      also passed inside to ensure that categories were not weighted higher
+      simply do to theirsize. This decision was made in order to ensure
+      that the results were not biased by the majority, Whites, or sizeable
+      minorities, Blacks and Hispanics. The model netted the validation accuracy
+      below.
+    </p>
+
+    <!-- <br></br> -->
+
+    <style>
+    .codebox{
+      color : #C6CCCD;
+      background-color: #353436;
+      line-height: 0.9；
+      width: 300px;
+      border: 5px ridge #21252A;
+      margin: 0px 125px 0px;
+    }
+    </style>
+
+    <!-- <div class="codebox">
+      <pre><code>
+        from sklearn.pipeline import make_pipeline
+        from sklearn.linear_model import LogisticRegression
+        from sklearn.preprocessing import StandardScaler
+
+
+        lr = make_pipeline(
+             StandardScaler(),
+             LogisticRegression()
+             )
+
+        lr.fit(X_train, y_train)
+        lr_accuracy_ = lr.score(X_val, y_val)
+        print('Logistic Regression Model\n')
+        print('Validation Accuracy:      ', round(lr_accuracy_ * 100, 2), '%')
+        print('Improvement over baseline:', round((lr.score(X_val, y_val) - baseline) * 100, 2), '%')
+      </code></pre>
+    </div> -->
+
+    <!-- <br></br> -->
+
+    <div class="codebox">
+      <pre><samp>
+        >>>Logistic Regression Model
+
+        >>>Validation Accuracy:       84.62 %
+        >>>Improvement over baseline: 29.37 %
+      </samp></pre>
+    </div>
+
+    <p>
+      I calculated the ROC Score, in order to get an intuation as to how good
+      the model is at netting true positives and avoiding false positives
+      accross the range of possible thresholds. As my reader can see from both
+      these metrics, the model performed rather well on the validation set.
+    </p>
+
+    <div class="codebox">
+      <pre><samp>
+        >>>ROC/AUC Score: 0.8607954545454546
+      </samp></pre>
+    </div>
+
+    <br></br>
+
+    <p>
+      I have plotted the ROC Curve shown below. As my reader can see, the ideal
+      threshold lies somewhere between 0.175 and 0.600.
+    </p>
+
+    <div align="Center">
+      <img src="ROC_AUC.png">
+    </div>
+
+    <br></br>
+
+    <p>
+      Because accuracy is our main metric for comparing the models, however,
+      I took the liberty of graphing the accuracy against each possible
+      threshold. I believe that my reader may find this graph somewhat easier
+      to interpret than the one above.
+    </p>
+
+    <br></br>
+
+    <div align="Center">
+      <img src="Threshold_Accuracy.png">
+    </div>
+
+    <br></br>
+
+    <p>
+      An interesting finding I made from performing this form of analysis is
+      that, with the exception of data in fields such as medicine in which the
+      mode-baseline will be over 95% and wherein risking a false positive is far
+      more risky than in other fields, oftentimes, the accuracy of a model will
+      peak and remain more-or-less constant around the 0.50 threshold mark.
+      This indicates that maintaining the default 0.50 threshold is not only
+      convinient, but accurate.
+    </p>
+
+    <br></br>
+
+    <p>
+      The confusion matrix below, representing the model's accuracy, precision,
+      and recall against the validation set confirms the above findings. Since
+      we are primarily concerned with accuracy here, note that the diagonal
+      containg the green and yellow boxes represents the number of values that
+      the model predicted correctly.
+    </p>
+
+    <br></br>
+
+    <div align="center">
+      <img src="LR_Confusion_Matrix.png">
+    </div>
+
+    <br></br>
+
+    <p>
+      After gaining an intuition for how well the model performed, I turned my
+      focus to the main question,
+      <i>
+        how does each group contribute to which party's candidate ultimately
+        wins?
+      </i>
+      <br></br>
+      To answer this question, I needed to use two tools, Permutation
+      Importances and the Logit function's coefficients.
+    </p>
+
+    <h2 align="center">
+      Permutation Importances
+    </h2>
+
+    <p>
+      eli5's Permutation Importances is a powerful tool for explaining which
+      features that contribute to a model's overall prediction are the strongest.
+      This library function spits out higher values for those features which its
+      algorithm show contribute more to the overall prediction than others.
+      These values are then expressed as floats with a plus-or-minus value
+      tacked on in order to compensate for the algorithm's uncertainty.
+    </p>
+
+      <p align="center">
+        Permutation Importances for the Training Set
+      </p>
+
+
+    <div align="center">
+      <img src="Permutation_Importances.png">
+    </div>
+
+    <p>
+      As my reader can see, the only feature with a definite signifigant
+      contribution to the party of the victorious candidate is the "Other"
+      demographic. Before thorizing as to why this might be, let's take a look
+      at the
+      <a href="https://www.youtube.com/watch?v=vN5cNN2-HWE&t=201s">
+        coefficients for the logit function
+      </a>
+      for our logistic regression and their corresponding probabilities.
+    </p>
+
+    <style>
+    table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+    td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+    }
+
+    tr:nth-child(even) {
+    background-color: #dddddd;
+    }
+    </style>
+
+    <h2 align="center">
+      Logit Coefficients and Probabilites
+    </h2>
+
+    <table>
+      <tr>
+        <th style="text-align:center">Feature</th>
+        <th style="text-align:center">Coefficients</th>
+        <th style="text-align:center">Probabilites</th>
+      </tr>
+      <tr>
+        <td>Whites</td>
+        <td>0.826510</td>
+        <td>0.695616</td>
+      </tr>
+      <tr>
+        <td>Native Americans</td>
+        <td>0.395116</td>
+        <td>0.597514</td>
+      </tr>
+      <tr>
+        <td>Voter Turnout</td>
+        <td>-0.284527</td>
+        <td>0.429344</td>
+      </tr>
+      <tr>
+        <td>Hispanics</td>
+        <td>-0.400713</td>
+        <td>0.401141</td>
+      </tr>
+      <tr>
+        <td>Asians</td>
+        <td>-0.404234</td>
+        <td>0.400296</td>
+      </tr>
+      <tr>
+        <td>Pacific Islanders</td>
+        <td>-0.420624	</td>
+        <td>0.396367</td>
+      </tr>
+      <tr>
+        <td>Blacks</td>
+        <td>-0.528958</td>
+        <td>0.370760</td>
+      </tr>
+      <tr>
+        <td>Multiple Races</td>
+        <td>-0.693813</td>
+        <td>0.333185</td>
+      </tr>
+      <tr>
+        <td>Other</td>
+        <td>-1.398168</td>
+        <td>0.198107</td>
+      </tr>
+    </table>
+
+    <p>
+      The sign of the coefficitents represents the direction that each feature
+      pushes the vote in with positive values indicating a benefit for the
+      Republicans and negative values indicating a benefit for the Democrats.
+      The probabilities indicate the likelihood that a district composed
+      entirely of the selected demographic would have a Republican
+      representative. In the case of the voter turnout category - assuming that
+      is the correct interpretation of the feature - the probability indicates
+      the likelihood of a randomly selected district anywhere in the nation
+      electing a Republican candidate given a 100% voter turnout. Given that
+      only data from a single year, 2017, is being examined here, it would be
+      prudent not to jump to any hasty conclusions. Even with 100% voter turnout,
+      a Republican candidate would likely still stand a strong chance of winning
+      given that the probability is close to 0.5. If we had analyzed data
+      over a longer time span, we can safely presume that the value would come
+      closer to 0.5.
+
+      <br></br>
+
+      What the data do tell us, however, can be extremely insightful. Keeping
+      the fact that the coefficients tell us the effect that the
+      <i>percentage</i> of each ethno-racial group has in a given voting
+      district, we find that states where the percenetage of Whites and Native
+      Americans is the highest tend to elect Republican Representatives. This
+      does not indicate that the latter group, being a minority, actually votes
+      Republican; rather, it tells us that the states with the highest per
+      capita American Indian populations tend to be in the west. An example of
+      this would be Arizona, a red state which also happens to be home to the
+      Navajo Nation. Nor does this finding indicate that the former group
+      predominantly votes Republican; rather, those Whites who live in states in
+      which a larger proportion of the population is white do.
+
+      <br></br>
+
+      In my opinion, quite possibly the most fascinating finding here is the
+      indication that states with higher percentages of people who choose to
+      check the "Other" box on the Census, tend to elect Democratic candidates.
+      My take on this is that, given the left-wing propensity for identity
+      politics, it would be natural for those who feel strongly enough about
+      their ethnic and racial identity to check "Other" when the Census rolls
+      around, would choose to live around like-minded people, people who
+      typically vote blue.
+    </p>
+
+<br></br>
+
+    <h3 align="center">
+      XGBoostClassifier
+    </h3>
+
+    <p>
+      As mentioned above, for the XGBoostClassifier model, I chose to perform
+      cross validation with a the last 15% of the values in the data held out as
+      the <b style="font-family:Copperplate"><i>sacred test set</i></b></b>. At
+      first this may seem odd to my reader, given the ability to perform a 70/30
+      or an 80/20 split, but this decision was made in order to make both models
+      truly comparable, and I do not intend to use this method in constructing
+      the Dash applet - coming soon. In order to ensure that the validation size
+      used by RandomizedSearchCV was as close to the that used in the logistic
+      regression model as possible, 6 folds were used.
+     </p>
+
+     <p align="center">
+       Here were the results:
+     </p>
+
+     <div class="codebox">
+       <pre><samp>
+         >>>Gradient Boosting
+
+         >>>Cross-Validation Accuracy: 80.23 %
+         >>>Improvement over baseline: 24.99 %
+       </samp></pre>
+     </div>
+
+       <p>
+         Despite all of the attention that gradient bossting seems to get in the
+         data science community, compared to the logistic regression model we
+         saw earlier, XGBoostClassier performed with 4.39% less accuracy. And
+         weighed against the test accuracy, both were equal.
+       </p>
+
+       <div class="codebox">
+         <pre><samp>
+           LR
+           Test Accuracy 80.0 %
+
+           GB
+           Test Accuracy 80.0 %
+         </samp></pre>
+       </div>
+
+       <p align="center">
+         In this case, a tie-breaker is needed, the ROC Score:
+       </p>
+
+       <div class="codebox">
+         <pre><samp>
+           LR
+           ROC/AUC Score: 0.8214285714285715
+
+           GB
+           ROC/AUC Score: 0.8315637065637067
+         </samp></pre>
+       </div>
+
+       <br></br>
+
+       <p>
+         One of the primary reasons for the relative weakness of the gradient
+         boosting model in this example is the paramaters which
+         RandomizedSearchCV generated for an ideal six-fold cross-validation
+         model.
+       </p>
+
+       <div class="codebox">
+         <pre><code>
+           print('Best hyperparameters')
+           print(search.best_params_)
+         </code></pre>
+       </div>
+
+       <div class="codebox">
+         <pre><samp>
+           >>>Best hyperparameters:
+           >>>{'xgbclassifier__reg_lambda': 0,
+           >>>'xgbclassifier__min_split_loss': 4,
+           >>>'xgbclassifier__min_child_weight': 1}
+         </samp></pre>
+       </div>
+
+       <p>
+         Although setting the regularization paramater, lambda, to 0 would
+         normally allow the tree to continue branching, setting gamma
+         (min_split_loss) to 4, prevented the tree from branching sufficiently
+         to truly outperform the logistic regression model.
+         <br></br>
+         The difference can be seen in an XGBoostClassifier model run with all
+         of the default regularization parameters. The model below was also run
+         with a 70/15/15 test, val, train split like the logistic regression
+         model above. To demonstrate this, compare the trees of the first
+         gradient boosting model, with that of the "default" model.
+         <br></br>
+         Note that the default model netted an 80.0% validation accuracy score.
+       </p>
+
+       <style>
+       .column {
+         float: center;
+         width: 100%;
+         padding: 5px;
+       }
+       </style>
+
+       <div class="row" align="center">
+         <div class="column">
+           <figure>
+             <img src="tree2.png" alt="rscv" width="100%">
+             <figcaption>
+               <font size=+1> Model with hyper-parameter optimization</font>
+             </figcaption>
+           </figure>
+         </div>
+         <div class="column">
+           <figure>
+             <img src="tree.png" alt="default_model" width="100%">
+             <figcaption>
+               <font size=+1>Model with default hyper-parameters</font>
+             </figcaption>
+           </figure>
+         </div>
+       </div>
+
+       <br></br>
+
+       <h3 align="center">
+         SHAP Force Plots
+       </h3>
+
+       <p>
+         Just as we examined the influence of the various features above using
+         permutation importances and the logit function's coefficients and their
+         corresponding probabilities, we can do the same for the second model
+         with SHAP's force_plot function.
+       </p>
+
+       <div align="center">
+         <img src="shap_1.png">
+       </div>
+
+       <p>
+         The plot above is of a randomly selected value from the test set which
+         the model correctly predicted as 1 or Republican.
+
+        <br><div align="center"><b>
+          Warning: don't be tempted to mistake the colors
+          used here as indicative of party affiliation.
+        </b></div></br>
+
+         The features represented by the red end of the ribbon are those which
+         contribute most to the model's prediction of this district's party
+         choice. In this case, Whites, the majority, and Others, an influential
+         minority are pushing the probability that this candidate belongs to one
+         party or the in opposite directions. In this case, ultimately, the
+         majority trend won out.
+       </p>
+
+       <br></br>
+
+       <div align="center">
+         <img src="shap_0.png">
+       </div>
+
+       <p>
+         This plot is of another randomly selected value from the test set which
+         the model correctly predicted as 0 or Democrat. In this case, even
+         though this district clearly has fewer folks who identified as Other,
+         there were still a sufficient number of Hispanics -this detail is not
+         visable here, but it in python-who along with liberal whites were able
+         to push the vote to the Democrats.
+       </p>
+
   </text>
 </body>
 </html>
