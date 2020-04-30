@@ -307,9 +307,9 @@ body{
     }
     </style>
 
-    <h2 align="center">
+    <h3 align="center">
       Logit Coefficients and Probabilites
-    </h2>
+    </h3>
 
     <table>
       <tr>
@@ -395,18 +395,24 @@ body{
       Navajo Nation. Nor does this finding indicate that the former group
       predominantly votes Republican; rather, those Whites who live in states in
       which a larger proportion of the population is white do.
+      
+      <br></br>
+
+      Note also the magnitude to which Pacific Islanders influence the vote.
+      This is likely due to the fact that Hawaii is the only state with a majority
+      Pacific Islander population, and Hawaii just happens to be a Democratic-run state.
+      Given that the largest Pacific Islander population 
 
       <br></br>
 
       In my opinion, quite possibly the most fascinating finding here is the
       indication that states with higher percentages of people who choose to
       check the "Other" box on the Census, tend to elect Democratic candidates.
-      My take on this is that, given the left-wing propensity for identity
-      politics, it would be natural for those who feel strongly enough about
-      their ethnic and racial identity to check "Other" when the Census rolls
-      around, would choose to live around like-minded people, people who
-      typically vote blue. Another possible explanation is that Democratic
-      districts tend to simply be more diverse.
+      This may simply be because coastal areas and large cities tend to have
+      more diverse populations, or it may be something more curious. My take
+      is that in addition to the diversity hypothesis, the growth of identity
+      politics has led some on the left to check the "Other" box more frequently
+      thank
     </p>
 
 <br></br>
@@ -443,7 +449,7 @@ body{
        <p>
          Despite all of the attention that gradient bossting seems to get in the
          data science community, compared to the logistic regression model we
-         saw earlier, XGBoostClassier performed with 4.39% less accuracy. And
+         saw earlier, XGBoostClassifier performed with 4.39% less accuracy. And
          weighed against the test accuracy, both were equal.
        </p>
 
@@ -552,39 +558,22 @@ body{
        </p>
 
        <div align="center">
-         <img src="shap_1.png">
-       </div>
-
-       <p>
-         The plot above is of a randomly selected value from the test set which
-         the model correctly predicted as 1 or Republican.
-
-        <br><div align="center"><b>
-          Warning: don't be tempted to mistake the colors
-          used here as indicative of party affiliation.
-        </b></div></br>
-
-         The features represented by the red end of the ribbon are those which
-         contribute most to the model's prediction of this district's party
-         choice. In this case, Whites, the majority, and Others, an influential
-         minority are pushing the probability that this candidate belongs to one
-         party or the in opposite directions. In this case, ultimately, the
-         majority trend won out.
-       </p>
-
-       <br></br>
-
-       <div align="center">
          <img src="shap_0.png">
        </div>
 
        <p>
-         This plot is of another randomly selected value from the test set which
-         the model correctly predicted as 0 or Democrat. In this case, even
-         though this district clearly has fewer folks who identified as Other,
-         there were still a sufficient number of Hispanics -this detail is not
-         visable here, but it in python-who along with liberal whites were able
-         to push the vote to the Democrats.
+         The plot above is of a randomly selected district in the test set which
+         the model correctly predicted as 0 or Democrat. The internal baseline
+         prediction set by the gradient boosting model 0.554 is not very far off 
+         from the logistic regression model's prediction of 0.547. The XGBoostClassifier
+         model's prediction is reflected in the fact that the predicted probability, 0.52 is 
+         less than the baseline. If it had been greater than this baseline, the model would 
+         have predicted a 1, indicating Republican.
+
+         <br></br>
+         
+         As for what demographic had the most influence in this prediction, the trend noted
+         above for more diverse parts of the country to vote blue has held true in this case.
        </p>
 
   </text>
