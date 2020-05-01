@@ -120,7 +120,7 @@ body{
         SciKitLearn pipeline with StandardScaler
       </a>
       also passed inside to ensure that categories were not weighted higher
-      simply do to theirsize. This decision was made in order to ensure
+      simply do to their size. This decision was made in order to ensure
       that the results were not biased by the majority, Whites, or sizeable
       minorities, Blacks and Hispanics. The model netted the validation accuracy
       below.
@@ -199,7 +199,10 @@ body{
       Because accuracy is our main metric for comparing the models,
       I took the liberty of graphing the accuracy against each possible
       threshold. I believe that my reader may find this graph somewhat easier
-      to interpret than the standard AUC ROC Curve.
+      to interpret than the standard
+      <a href="https://towardsdatascience.com/understanding-auc-roc-curve-68b2303cc9c5">
+       ROC AUC Curve.
+     </a>
     </p>
 
     <br></br>
@@ -212,12 +215,17 @@ body{
 
     <p>
       An interesting finding I made from performing this form of analysis is
-      that, with the exception of data in fields such as medicine in which the
-      mode-baseline will be over 95% and wherein risking a false positive is far
-      more risky than in other fields, oftentimes, the accuracy of a model will
-      peak and remain more-or-less constant around the 0.50 threshold mark.
-      This indicates that maintaining the default 0.50 threshold is not only
-      convinient, but accurate.
+      that  oftentimes, the accuracy of a model will peak and remain
+      more-or-less constant around the 0.50 threshold mark. This indicates that
+      maintaining the default 0.50 threshold is not only convinient, but
+      accurate.
+
+      <br></br>
+
+      It should be noted, however, that there are exceptions to this rule in
+      fields such as genetics and medicine where the mode-baseline is often
+      over 95%. In such a case, the accuracy as a function of the threshold
+      would peak much later and thus require a much higher baseline.
     </p>
 
     <br></br>
@@ -377,12 +385,12 @@ body{
       <br></br>
 
       What the data do tell us, however, can be extremely insightful. Keeping
-      the fact that the coefficients tell us the effect that the
-      <i>percentage</i> of each ethno-racial group has in a given voting
-      district, we find that states where the percenetage of Whites and Native
-      Americans is the highest tend to elect Republican Representatives. This
-      does not indicate that the latter group, being a minority, actually votes
-      Republican; rather, it tells us that the states with the highest per
+      the fact that the coefficients tell us the relationship between the
+      <i>percentage</i> of each ethno-racial group has and an elected official's
+      party affiliation, we find that states where the percenetage of Whites and
+      Native Americans is the highest tend to elect Republican Representatives.
+      This does not indicate that the latter group, being a minority, actually
+      votes Republican; rather, it tells us that the states with the highest per
       capita American Indian populations tend to be in the west. An example of
       this would be Arizona, a red state which also happens to be home to the
       Navajo Nation. Nor does this finding indicate that the former group
@@ -391,12 +399,13 @@ body{
 
       <br></br>
 
-      Note also the magnitude to which Pacific Islanders influence the vote.
-      This is likely due to the fact that Hawaii is the only state with a majority
-      Pacific Islander population, and Hawaii just happens to be a Democratic-run state.
-      Given that the largest Pacific Islander populations on the US mainlaind are found
-      in Utah and the Carolinas, it's likley that the trend would run in the opposite
-      direction if Hawaii were omitted from the data.
+      Note also the magnitude to which the percentage of Pacific Islanders seem
+      to influence the direction of the vote. This is likely due to the fact that
+      Hawaii is the only state with a majority Pacific Islander population, and
+      Hawaii just happens to be a Democratic-run state. Given that the largest
+      Pacific Islander populations on the US mainlaind are found in Utah and the
+      Carolinas, it's likley that the trend would run in the opposite direction
+      if Hawaii were omitted from the data.
 
       <br></br>
 
@@ -404,7 +413,9 @@ body{
       indication that states with higher percentages of people who choose to
       check the "Other" box on the Census, tend to elect Democratic candidates.
       This may simply be because coastal areas and large cities tend to have
-      more diverse populations, or it may be something more curious.
+      more diverse populations, or it may be something more curious. Further
+      study into how the Census actually counts "Other" would be needed in order
+      to draw a more complete conclusion.
     </p>
 
 <br></br>
@@ -499,14 +510,19 @@ body{
          normally allow the tree to continue branching, setting gamma
          (min_split_loss) to 4, prevented the tree from branching sufficiently
          to truly outperform the logistic regression model.
+
          <br></br>
+
          The difference can be seen in an XGBoostClassifier model run with all
-         of the default regularization parameters. The model below was also run
+         of the default regularization parameters. I ran a second model below
          with a 70/15/15 test, val, train split like the logistic regression
-         model above. To demonstrate this, compare the trees of the first
+         model above. To visualize this, compare the trees of the first
          gradient boosting model, with that of the "default" model.
+
          <br></br>
-         Note that the default model netted an 80.0% validation accuracy score.
+
+         Note that the default model also netted an 80.0% validation accuracy
+         score.
        </p>
 
        <style>
@@ -557,17 +573,17 @@ body{
          The plot above is of a randomly selected district in the test set which
          the model correctly predicted as 0 or Democrat. The internal baseline
          prediction set by the gradient boosting model 0.554 is not very far off
-         from the logistic regression model's prediction of 0.547. The XGBoostClassifier
-         model's prediction is reflected in the fact that the predicted probability, 0.52 is
-         less than the baseline. If it had been greater than this baseline, the model would
-         have predicted a 1, indicating Republican.
+         from the original baseline of 0.547. The XGBoostClassifier model's
+         prediction is reflected in the fact that the predicted probability, 0.52
+         is less than the baseline. If it had been greater than this baseline,
+        the model would have predicted a 1, indicating Republican.
 
          <br></br>
 
-         As for what demographic had the most influence in this prediction, the trend noted
-         above for more diverse parts of the country to vote blue has held true in this case.
+         As for what demographic had the most influence in this prediction, the
+         trend noted above for more diverse parts of the country to vote blue
+         has held true in this case.
        </p>
-
   </text>
 </body>
 </html>
